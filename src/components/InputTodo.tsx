@@ -1,21 +1,27 @@
-import React from 'react';
-import {AddTodoEvents} from "@/components/TodosLogic.tsx";
+import {ChangeEvent, FC, FormEvent} from 'react';
 
 export type InputTodoProps = {
     title: string
 };
-const InputTodo: React.FC<InputTodoProps & AddTodoEvents> = ({title, handleSubmit, handleChange}) => {
+
+export type InputTodoEvents = {
+    submitEvent: (changeEvent: FormEvent<HTMLFormElement>) => void
+    changeEvent: (changeEvent: ChangeEvent<HTMLInputElement>) => void
+}
+
+const InputTodo: FC<InputTodoProps & InputTodoEvents> = ({title, submitEvent, changeEvent}) => {
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submitEvent}>
             <input
                 type="text"
                 placeholder="Add Todo..."
                 value={title}
-                onChange={handleChange}
+                onChange={changeEvent}
             />
             <button>Submit</button>
         </form>
     );
 };
+
 export default InputTodo;

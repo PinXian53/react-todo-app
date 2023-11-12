@@ -1,5 +1,4 @@
-import React from "react";
-import {TodoItemEvents} from "@/components/TodosLogic.tsx";
+import {FC} from "react";
 
 export type TodoItemProps = {
     id: string
@@ -7,7 +6,12 @@ export type TodoItemProps = {
     completed: boolean
 };
 
-const TodoItem: React.FC<TodoItemProps & TodoItemEvents> = ({id, title, completed, changeEvent, deleteEvent}) => {
+export type TodoItemEvents = {
+    changeEvent: (value: string) => void
+    deleteEvent: (value: string) => void
+}
+
+const TodoItem: FC<TodoItemProps & TodoItemEvents> = ({id, title, completed, changeEvent, deleteEvent}) => {
 
     return (
         <li key={id}>
@@ -21,4 +25,5 @@ const TodoItem: React.FC<TodoItemProps & TodoItemEvents> = ({id, title, complete
         </li>
     );
 };
+
 export default TodoItem;

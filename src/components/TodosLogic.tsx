@@ -1,20 +1,8 @@
 import InputTodo from "@/components/InputTodo.tsx";
 import TodosList from "@/components/TodosList.tsx";
 import {TodoItemProps} from "@/components/TodoItem.tsx";
-import React, {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {v4 as uuidV4} from "uuid";
-
-export type TodoItemEvents = React.PropsWithChildren<{
-    changeEvent: (value: string) => void
-    deleteEvent: (value: string) => void
-}>
-
-export type AddTodoEvents = React.PropsWithChildren<{
-    addTodoEvent: (value: string) => void
-    handleSubmit: (changeEvent: FormEvent<HTMLFormElement>) => void
-    handleChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void
-}>
-
 
 const TodosLogic = () => {
 
@@ -36,7 +24,7 @@ const TodosLogic = () => {
         },
     ]);
 
-    const changeEvent = (currentId: string) => {
+    const todoItemChangeEvent = (currentId: string) => {
         setTodos((prevState: TodoItemProps[]) => {
                 return prevState.map((todo: TodoItemProps) => {
                     if (todo.id === currentId) {
@@ -51,7 +39,7 @@ const TodosLogic = () => {
         );
     };
 
-    const deleteEvent = (currentId: string) => {
+    const todoItemDeleteEvent = (currentId: string) => {
         setTodos([
             ...todos.filter((todo) => {
                 return todo.id !== currentId;
@@ -59,9 +47,21 @@ const TodosLogic = () => {
         ]);
     };
 
-    const [addTodoTitle, setAddTodoTitle] = useState('');
+    const [inputTodoTitle, setInputTodoTitle] = useState('');
 
-    const addTodoEvent = (title: string) => {
+    const inputTodoSubmitEvent = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const title = (e.currentTarget.elements[0] as HTMLInputElement).value.trim();
+        if (title) {
+            addTodo(title);
+            setInputTodoTitle('');
+            setMessage('');
+        } else {
+            setMessage('Please add item.');
+        }
+    };
+
+    const addTodo = (title: string) => {
         const newTodo = {
             id: uuidV4(),
             title: title,
@@ -70,20 +70,8 @@ const TodosLogic = () => {
         setTodos([...todos, newTodo]);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const title = (e.currentTarget.elements[0] as HTMLInputElement).value.trim();
-        if (title) {
-            addTodoEvent(title);
-            setAddTodoTitle('');
-            setMessage('');
-        } else {
-            setMessage('Please add item.');
-        }
-    };
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setAddTodoTitle(e.target.value);
+    const inputTodoChangeEvent = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputTodoTitle(e.target.value);
     };
 
     const [message, setMessage] = useState('');
@@ -91,17 +79,17 @@ const TodosLogic = () => {
     return (
         <div>
             <InputTodo
-                title={addTodoTitle}
-                addTodoEvent={addTodoEvent}
-                handleSubmit={handleSubmit}
-                handleChange={handleChange}/>
+                title={inputTodoTitle}
+                submitEvent={inputTodoSubmitEvent}
+                changeEvent={inputTodoChangeEvent}/>
             <span>{message}</span>
             <TodosList
                 todosPropsList={todos}
-                changeEvent={changeEvent}
-                deleteEvent={deleteEvent}
+                changeEvent={todoItemChangeEvent}
+                deleteEvent={todoItemDeleteEvent}
             />
         </div>
     )
 }
+
 export default TodosLogic;
