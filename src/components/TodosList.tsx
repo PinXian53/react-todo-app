@@ -1,11 +1,12 @@
 import React from "react";
 import TodoItem, {TodoItemProps} from "@/components/TodoItem.tsx";
+import {TodosEvents} from "@/components/TodosLogic.tsx";
 
 type TodosPropsObject = React.PropsWithChildren<{
     todosPropsList: Array<TodoItemProps>
 }>
 
-const TodosList = ({todosPropsList}: TodosPropsObject) => {
+const TodosList: React.FC<TodosPropsObject & TodosEvents> = ({todosPropsList, changeEvent, deleteEvent}) => {
     return (
         <ul>
             {todosPropsList.map((todosProps) => (
@@ -13,10 +14,13 @@ const TodosList = ({todosPropsList}: TodosPropsObject) => {
                           id={todosProps.id}
                           title={todosProps.title}
                           completed={todosProps.completed}
+                          changeEvent={changeEvent}
+                          deleteEvent={deleteEvent}
                 />
             ))}
         </ul>
     );
 };
+
 export default TodosList;
 
