@@ -1,13 +1,13 @@
 import React from "react";
-import {TodosEvents} from "@/components/TodosLogic.tsx";
+import {TodoItemEvents} from "@/components/TodosLogic.tsx";
 
 export type TodoItemProps = {
-    id: number
+    id: string
     title: string
     completed: boolean
 };
 
-const TodoItem: React.FC<TodoItemProps & TodosEvents> = ({id, title, completed, changeEvent, deleteEvent}) => {
+const TodoItem: React.FC<TodoItemProps & TodoItemEvents> = ({id, title, completed, changeEvent, deleteEvent}) => {
 
     return (
         <li key={id}>

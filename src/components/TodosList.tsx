@@ -1,12 +1,12 @@
 import React from "react";
 import TodoItem, {TodoItemProps} from "@/components/TodoItem.tsx";
-import {TodosEvents} from "@/components/TodosLogic.tsx";
+import {TodoItemEvents} from "@/components/TodosLogic.tsx";
 
 type TodosPropsObject = React.PropsWithChildren<{
     todosPropsList: Array<TodoItemProps>
 }>
 
-const TodosList: React.FC<TodosPropsObject & TodosEvents> = ({todosPropsList, changeEvent, deleteEvent}) => {
+const TodosList: React.FC<TodosPropsObject & TodoItemEvents> = ({todosPropsList, changeEvent, deleteEvent}) => {
     return (
         <ul>
             {todosPropsList.map((todosProps) => (
