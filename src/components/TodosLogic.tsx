@@ -1,28 +1,24 @@
 import InputTodo from "@/components/InputTodo.tsx";
 import TodosList from "@/components/TodosList.tsx";
 import {TodoItemProps} from "@/components/TodoItem.tsx";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {v4 as uuidV4} from "uuid";
+
+const todosLocalStorageKey = "todos";
 
 const TodosLogic = () => {
 
-    const [todos, setTodos] = useState<TodoItemProps[]>([
-        {
-            id: uuidV4(),
-            title: 'Setup development environment',
-            completed: true,
-        },
-        {
-            id: uuidV4(),
-            title: 'Develop website and add content',
-            completed: false,
-        },
-        {
-            id: uuidV4(),
-            title: 'Deploy to live server',
-            completed: false,
-        },
-    ]);
+    const [todos, setTodos] = useState<TodoItemProps[]>(getInitialTodos());
+
+    function getInitialTodos(): TodoItemProps[] {
+        const value = localStorage.getItem(todosLocalStorageKey);
+        return value === null ? [] : JSON.parse(value);
+    }
+
+    useEffect(() => {
+        const value = JSON.stringify(todos);
+        localStorage.setItem(todosLocalStorageKey, value);
+    }, [todos]);
 
     const todoItemChangeEvent = (currentId: string) => {
         setTodos((prevState: TodoItemProps[]) => {
@@ -47,7 +43,7 @@ const TodosLogic = () => {
         ]);
     };
 
-    const todoItemUpdateEvent = (updatedTitle: string, id:string) => {
+    const todoItemUpdateEvent = (updatedTitle: string, id: string) => {
         setTodos(
             todos.map((todo) => {
                 if (todo.id === id) {
