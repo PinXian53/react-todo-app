@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
-import './index.css'
 import TodoApp from "@/TodoApp.tsx";
+import '@/styles/app.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     // React.StrictMode 為「嚴格模式」，確保開發人員在建立 React 應用程式時遵循 React 最佳實踐。

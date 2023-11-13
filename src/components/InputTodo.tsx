@@ -2,6 +2,7 @@ import {ChangeEvent, FC, FormEvent} from 'react';
 
 export type InputTodoProps = {
     title: string
+    message: string
 };
 
 export type InputTodoEvents = {
@@ -9,18 +10,23 @@ export type InputTodoEvents = {
     changeEvent: (changeEvent: ChangeEvent<HTMLInputElement>) => void
 }
 
-const InputTodo: FC<InputTodoProps & InputTodoEvents> = ({title, submitEvent, changeEvent}) => {
+const InputTodo: FC<InputTodoProps & InputTodoEvents> = ({title, message, submitEvent, changeEvent}) => {
 
     return (
-        <form onSubmit={submitEvent}>
-            <input
-                type="text"
-                placeholder="Add Todo..."
-                value={title}
-                onChange={changeEvent}
-            />
-            <button>Submit</button>
-        </form>
+        <>
+            <form onSubmit={submitEvent} className="form-container">
+                <input
+                    type="text"
+                    className="input-text"
+                    placeholder="Add Todo..."
+                    value={title}
+                    onChange={changeEvent}
+                />
+                <button className="input-submit">Submit</button>
+
+            </form>
+            <span className="submit-warning">{message}</span>
+        </>
     );
 };
 

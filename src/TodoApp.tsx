@@ -3,10 +3,12 @@ import TodosLogic from "@/components/TodosLogic.tsx";
 
 const TodoApp = () => {
     return (
-        <>
-            <Header/>
-            <TodosLogic />
-        </>
+        <div className="wrapper">
+            <div className="todos">
+                <Header />
+                <TodosLogic />
+            </div>
+        </div>
     );
 };
 

@@ -80,9 +80,9 @@ const TodosLogic = () => {
         <div>
             <InputTodo
                 title={inputTodoTitle}
+                message={message}
                 submitEvent={inputTodoSubmitEvent}
                 changeEvent={inputTodoChangeEvent}/>
-            <span>{message}</span>
             <TodosList
                 todosPropsList={todos}
                 changeEvent={todoItemChangeEvent}
