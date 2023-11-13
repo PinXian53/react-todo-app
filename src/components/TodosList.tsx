@@ -5,7 +5,7 @@ type TodosPropsObject = {
     todosPropsList: Array<TodoItemProps>
 }
 
-const TodosList: FC<TodosPropsObject & TodoItemEvents> = ({todosPropsList, changeEvent, deleteEvent}) => {
+const TodosList: FC<TodosPropsObject & TodoItemEvents> = ({todosPropsList, changeEvent, deleteEvent, updateEvent}) => {
     return (
         <ul>
             {todosPropsList.map((todosProps) => (
@@ -15,6 +15,7 @@ const TodosList: FC<TodosPropsObject & TodoItemEvents> = ({todosPropsList, chang
                           completed={todosProps.completed}
                           changeEvent={changeEvent}
                           deleteEvent={deleteEvent}
+                          updateEvent={updateEvent}
                 />
             ))}
         </ul>

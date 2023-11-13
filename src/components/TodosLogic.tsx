@@ -47,6 +47,17 @@ const TodosLogic = () => {
         ]);
     };
 
+    const todoItemUpdateEvent = (updatedTitle: string, id:string) => {
+        setTodos(
+            todos.map((todo) => {
+                if (todo.id === id) {
+                    todo.title = updatedTitle;
+                }
+                return todo;
+            })
+        );
+    };
+
     const [inputTodoTitle, setInputTodoTitle] = useState('');
 
     const inputTodoSubmitEvent = (e: FormEvent<HTMLFormElement>) => {
@@ -87,6 +98,7 @@ const TodosLogic = () => {
                 todosPropsList={todos}
                 changeEvent={todoItemChangeEvent}
                 deleteEvent={todoItemDeleteEvent}
+                updateEvent={todoItemUpdateEvent}
             />
         </div>
     )
