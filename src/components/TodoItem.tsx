@@ -2,27 +2,13 @@ import React, {CSSProperties, FC, useState} from "react";
 import styles from '@/styles/TodoItem.module.scss';
 import {AiFillEdit} from "react-icons/ai";
 import {FaTrash} from "react-icons/fa";
+import {TodoItemProps, useTodosStore} from "@/stores/TodoStore.ts";
 
-export type TodoItemProps = {
-    id: string
-    title: string
-    completed: boolean
-};
+const TodoItem: FC<TodoItemProps> = ({id, title, completed}) => {
 
-export type TodoItemEvents = {
-    changeEvent: (value: string) => void
-    deleteEvent: (value: string) => void
-    updateEvent: (updatedTitle: string, id: string) => void
-}
-
-const TodoItem: FC<TodoItemProps & TodoItemEvents> = ({
-                                                          id,
-                                                          title,
-                                                          completed,
-                                                          changeEvent,
-                                                          deleteEvent,
-                                                          updateEvent
-                                                      }) => {
+    const handleChange = useTodosStore((state) => state.handleChange);
+    const delTodo = useTodosStore((state) => state.delTodo);
+    const setUpdate = useTodosStore((state) => state.setUpdate);
 
     const [editing, setEditing] = useState(false);
 
@@ -63,13 +49,13 @@ const TodoItem: FC<TodoItemProps & TodoItemEvents> = ({
                 <input
                     type="checkbox"
                     checked={completed}
-                    onChange={() => changeEvent(id)}
+                    onChange={() => handleChange(id)}
                 />
                 <button onClick={handleEditing}>
-                    <AiFillEdit style={iconStyle} />
+                    <AiFillEdit style={iconStyle}/>
                 </button>
-                <button onClick={() => deleteEvent(id)}>
-                    <FaTrash style={iconStyle} />
+                <button onClick={() => delTodo(id)}>
+                    <FaTrash style={iconStyle}/>
                 </button>
                 <span style={completed ? completedStyle : undefined}>
                   {title}
@@ -80,7 +66,7 @@ const TodoItem: FC<TodoItemProps & TodoItemEvents> = ({
                 style={editing ? defaultStyle : hideStyle}
                 value={title}
                 className={styles.textInput}
-                onChange={(e) => updateEvent(e.target.value, id)}
+                onChange={(e) => setUpdate(e.target.value, id)}
                 onKeyDown={handleUpdatedDone}
             />
         </li>

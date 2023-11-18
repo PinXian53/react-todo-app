@@ -1,17 +1,27 @@
-import {ChangeEvent, FC, FormEvent} from 'react';
 import {FaPlusCircle} from "react-icons/fa";
+import {useTodosStore} from "@/stores/TodoStore.ts";
+import {ChangeEvent, FormEvent, useState} from "react";
 
-export type InputTodoProps = {
-    title: string
-    message: string
-};
+const InputTodo = () => {
 
-export type InputTodoEvents = {
-    submitEvent: (changeEvent: FormEvent<HTMLFormElement>) => void
-    changeEvent: (changeEvent: ChangeEvent<HTMLInputElement>) => void
-}
+    const addTodoItem = useTodosStore((state) => state.addTodoItem);
+    const [message, setMessage] = useState('');
+    const [inputTitle, setInputTitle] = useState('');
 
-const InputTodo: FC<InputTodoProps & InputTodoEvents> = ({title, message, submitEvent, changeEvent}) => {
+    const submitEvent = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const title = (e.currentTarget.elements[0] as HTMLInputElement).value.trim();
+        if (title) {
+            addTodoItem(title);
+            setInputTitle('');
+            setMessage('');
+        } else {
+            setMessage('Please add item.');
+        }
+    };
+    const changeEvent = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputTitle(e.target.value);
+    };
 
     return (
         <>
@@ -20,7 +30,7 @@ const InputTodo: FC<InputTodoProps & InputTodoEvents> = ({title, message, submit
                     type="text"
                     className="input-text"
                     placeholder="Add Todo..."
-                    value={title}
+                    value={inputTitle}
                     onChange={changeEvent}
                 />
                 <button className="input-submit">
@@ -30,7 +40,6 @@ const InputTodo: FC<InputTodoProps & InputTodoEvents> = ({title, message, submit
                         className="submit-icon"
                     />
                 </button>
-
             </form>
             <span className="submit-warning">{message}</span>
         </>

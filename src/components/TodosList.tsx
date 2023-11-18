@@ -1,21 +1,15 @@
-import {FC} from "react";
-import TodoItem, {TodoItemEvents, TodoItemProps} from "@/components/TodoItem.tsx";
+import TodoItem from "@/components/TodoItem.tsx";
+import {useTodosStore} from "@/stores/TodoStore.ts";
 
-type TodosPropsObject = {
-    todosPropsList: Array<TodoItemProps>
-}
-
-const TodosList: FC<TodosPropsObject & TodoItemEvents> = ({todosPropsList, changeEvent, deleteEvent, updateEvent}) => {
+const TodosList = () => {
+    const todos = useTodosStore((state) => state.todos);
     return (
         <ul>
-            {todosPropsList.map((todosProps) => (
+            {todos.map((todosProps) => (
                 <TodoItem key={todosProps.id}
                           id={todosProps.id}
                           title={todosProps.title}
                           completed={todosProps.completed}
-                          changeEvent={changeEvent}
-                          deleteEvent={deleteEvent}
-                          updateEvent={updateEvent}
                 />
             ))}
         </ul>
