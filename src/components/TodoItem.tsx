@@ -1,5 +1,7 @@
 import React, {CSSProperties, FC, useState} from "react";
 import styles from '@/styles/TodoItem.module.scss';
+import {AiFillEdit} from "react-icons/ai";
+import {FaTrash} from "react-icons/fa";
 
 export type TodoItemProps = {
     id: string
@@ -35,6 +37,11 @@ const TodoItem: FC<TodoItemProps & TodoItemEvents> = ({
         display: 'none',
     };
 
+    const iconStyle: CSSProperties = {
+        color: "#5e5e5e",
+        fontSize: "16px"
+    };
+
     const defaultStyle: CSSProperties = {};
 
     const handleEditing = () => {
@@ -58,8 +65,12 @@ const TodoItem: FC<TodoItemProps & TodoItemEvents> = ({
                     checked={completed}
                     onChange={() => changeEvent(id)}
                 />
-                <button onClick={handleEditing}>Edit</button>
-                <button onClick={() => deleteEvent(id)}>Delete</button>
+                <button onClick={handleEditing}>
+                    <AiFillEdit style={iconStyle} />
+                </button>
+                <button onClick={() => deleteEvent(id)}>
+                    <FaTrash style={iconStyle} />
+                </button>
                 <span style={completed ? completedStyle : undefined}>
                   {title}
                 </span>
