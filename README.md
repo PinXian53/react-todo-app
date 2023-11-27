@@ -13,7 +13,7 @@
 
 其餘紀錄：
 - 建立專案
-  - npm
+  - npx create-react-app
       ```shell
       # 指令：npx create-react-app <project-name> --template typescript
       npx create-react-app react-todo-app --template typescript
