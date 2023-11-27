@@ -11,3 +11,18 @@
 
 <img src="https://github.com/PinXian53/react-todo-app/blob/main/image/demo.gif" alt="image">
 
+其餘紀錄：
+- 建立專案
+  - npm
+      ```shell
+      # 指令：npx create-react-app <project-name> --template typescript
+      npx create-react-app react-todo-app --template typescript
+      ```
+  - vite
+      ```shell
+      # 執行後會有選項可以配置 
+      # 流程：輸入專案名稱 → 選 React → 選 TypeScript
+      npm create vite@latest
+      ```
+      <img src="https://github.com/PinXian53/react-todo-app/blob/main/image/vite.png" alt="image">
+    
